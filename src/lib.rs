@@ -17,7 +17,7 @@ fn read_char_probs(path: &str) -> Result<HashMap<char, f64>, io::Error> {
         if line.chars().next().unwrap() == '#' {
             continue;
         }
-	let parts : Vec<&str> = line.splitn(2, ' ').collect();
+	let parts : Vec<&str> = line.splitn(2, '|').collect();
         let k = parts[0].chars().next().unwrap();
         let v: f64 = parts[1].parse().unwrap();
         hm.insert(k,v);
@@ -46,5 +46,5 @@ fn test_read_char_probs() {
 
 #[test]
 fn test_sentence_prob() {
-    assert!((-14.608 - sentence_prob("Abc e")).abs() < 0.0001);
+    assert!((-22.883 - sentence_prob("Abc e!")).abs() < 0.0001);
 }
