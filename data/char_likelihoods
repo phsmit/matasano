@@ -1,0 +1,29 @@
+# This are the (natural) log likelihoods of the letters a-z (A-Z are lowered to a-z) and all other characters ('_'). 
+# Extracted from the OANC corpus
+a -2.713
+w -4.408
+s -2.888
+l -3.374
+d -3.505
+p -3.973
+i -2.778
+t -2.607
+z -6.857
+e -2.318
+o -2.822
+j -6.655
+k -5.363
+h -3.356
+u -3.818
+y -4.319
+q -6.769
+v -4.751
+_ -6.643
+g -4.121
+b -4.391
+m -3.870
+c -3.543
+n -2.836
+r -2.977
+f -4.006
+x -6.131
