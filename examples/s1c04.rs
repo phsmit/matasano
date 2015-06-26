@@ -1,21 +1,21 @@
 extern crate matasano;
 extern crate rustc_serialize;
 
-use matasano::sentence_prob;
+use matasano::CanScore;
+use matasano::freq_scorer::FreqScorer;
 use rustc_serialize::hex::FromHex;
-use std::str;
-use std::f64;
+
+use std::{f64,fs,io,str};
 use std::io::prelude::*;
-use std::io;
-use std::fs::File;
 
 fn main() {
-    let file = File::open("data/s1c04").unwrap();
+    let f = FreqScorer::new("data/char_likelihoods").unwrap();
+    let file = fs::File::open("data/s1c04").unwrap();
 
     let mut max_score : f64 = f64::MIN;
     let mut max_char = 0;
 
-    let mut max_sent : String = String::from("");
+    let mut max_sent : String = "".to_string(); 
 
     for line in io::BufReader::new(file).lines() {
         let line = line.unwrap();    
@@ -27,12 +27,10 @@ fn main() {
 
            match str::from_utf8(&y) {
                 Ok(x) => { 
-                          if sentence_prob(x) > max_score {
-                              max_score = sentence_prob(x);
+                          if f.score(x) > max_score {
+                              max_score = f.score(x);
                               max_char = char;
                               max_sent = String::from(x);
-
-
                           } 
                          },
                 _ => continue,
