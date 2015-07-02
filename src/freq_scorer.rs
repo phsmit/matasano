@@ -1,23 +1,30 @@
 use super::CanScore;
 
-use std::ascii::AsciiExt;
 use std::{fs,io,f64};
 use std::io::prelude::*;
+
+const LOW_A: u8 = 97;
+const LOW_Z: u8 = 122;
+const UPP_A: u8 = 65;
+const UPP_Z: u8 = 90;
+const SPACE: u8 = 32;
+
 
 pub struct FreqScorer {
     freq: [f64; 28],
 }
 
 impl CanScore for FreqScorer {
-    fn score(&self, input: &str) -> f64 {
+    fn score(&self, input: &[u8]) -> f64 {
         let mut score = 0.0;
-        for char in input.to_ascii_lowercase().chars() {
+        for &char in input {
             score += match char {
-                'a'...'z' => self.freq[char as usize - 'a' as usize],
-                ' ' => self.freq[26],
+                LOW_A...LOW_Z => self.freq[(char - LOW_A) as usize],
+                UPP_A...UPP_Z => self.freq[(char - UPP_A) as usize],
+                SPACE => self.freq[26],
                 _ => self.freq[27],
             }
-        } 
+        }
         return score;
     }
 }
@@ -34,10 +41,10 @@ impl FreqScorer {
             let parts : Vec<&str> = line.splitn(2, '|').collect();
             let k = parts[0].chars().next().unwrap();
             let v: f64 = parts[1].parse().unwrap();
-            
+
             match k {
                 'a'...'z' => scorer.freq[k as usize - 'a' as usize] = v,
-                ' ' => scorer.freq[26] = v, 
+                ' ' => scorer.freq[26] = v,
                 _ => scorer.freq[27] = v,
             }
         }
