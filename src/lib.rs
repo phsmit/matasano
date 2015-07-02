@@ -11,7 +11,7 @@ pub trait CanScore {
     fn score(&self, &[u8]) -> f64;
 }
 
-pub fn hamming_distance(l: &[u8], r: &[u8]) -> usize {
+fn hamming_distance(l: &[u8], r: &[u8]) -> usize {
     let mut dist = 0;
     for (le, re) in l.iter().zip(r.iter()) {
         let mut diff = *le ^ *re;
